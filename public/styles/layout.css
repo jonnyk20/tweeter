@@ -59,3 +59,27 @@ body {
   padding-bottom: 5px;
   margin: 10px 0 10px 0;
  }
+
+ article.tweet {
+  border: solid 2px #eeeeee;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+div.tweet-header {
+  padding: 10px;
+  background-color: #eeeeee;
+}
+
+div.tweet-body {
+  padding: 10px;
+}
+
+div.tweet-footer {
+  padding: 10px;
+  border-top: solid 1px #eeeeee;
+}
+
+div.tweet-footer .tweet-actions {
+  float: right;
+}
