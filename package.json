@@ -18,5 +18,9 @@
   },
   "devDependencies": {
     "nodemon": "^1.9.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jonnyk20/tweeter.git"
   }
 }
