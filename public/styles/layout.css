@@ -24,4 +24,38 @@ body {
 /*
  * Additional CSS can be defined below or in other CSS files, as per instructions
  */
- 
+
+.error {
+ color: red;
+}
+
+ main {
+  width: 450px;
+  margin: auto;
+  background-color: white;
+  padding-top: 140px;
+  padding: 140px 10px 10px 10px;
+}
+
+.new-tweet {
+  background-color: #eeeeee;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+
+.new-tweet textarea {
+  padding: 5px;
+  width: 100%;
+ }
+
+ .new-tweet .counter {
+  float: right;
+ }
+
+ .new-tweet h2 {
+  border-bottom: solid 1px black;
+  padding-bottom: 5px;
+  margin: 10px 0 10px 0;
+ }
