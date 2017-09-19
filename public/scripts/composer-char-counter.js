@@ -1,7 +1,8 @@
 
+/* eslint prefer-arrow-callback: [ "error", { "allowNamedFunctions": true }, {allowUnboundThis: true} ] */
 $(function foo() {
   const charMax = 140;
-  $('.new-tweet').on('input', 'textarea', () => {
+  $('.new-tweet').on('input', 'textarea', function bar() {
     const $this = $(this);
     const { length } = $this.val();
     const counterSpan = $this.closest('.new-tweet').find('.counter');
@@ -10,6 +11,7 @@ $(function foo() {
       counterSpan.addClass('error');
     } else {
       counterSpan.removeClass('error');
+      $('.tweet-error').hide();
     }
   });
 });

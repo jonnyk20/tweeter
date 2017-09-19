@@ -44,10 +44,27 @@ body {
   border-radius: 10px;
 }
 
+.new-tweet form {
+  text-align: center;
+}
+
+.new-tweet form:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 
 .new-tweet textarea {
   padding: 5px;
   width: 100%;
+ }
+
+.new-tweet button {
+  float: left;
+ }
+
+ .tweet-error {
+  display: none;
  }
 
  .new-tweet .counter {
@@ -60,7 +77,7 @@ body {
   margin: 10px 0 10px 0;
  }
 
- article.tweet {
+article.tweet {
   border: solid 2px #eeeeee;
   margin: 10px;
   border-radius: 10px;
@@ -94,6 +111,7 @@ div.tweet-header .handle {
 div.tweet-body {
   padding: 10px;
   min-height: 100px;
+  overflow-wrap: break-word;
 }
 
 div.tweet-footer {

@@ -1,10 +1,13 @@
 {
     "extends": "airbnb-base",
-
     "env": {
         "browser": true,
         "node": true,
         "jquery": true
+    },
+    "rules": {
+        "prefer-arrow-callback": [],
+        "no-var": 0
     }
 
 }
