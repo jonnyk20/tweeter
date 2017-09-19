@@ -8,13 +8,11 @@ $(function foo() {
 
 
 function loadTweets(){
-  console.log("getting..")
     $.ajax({
     method: "GET",
     url: "/tweets",
     dataType: 'json',
     success: function(data){
-      console.log("success")
       data = data.sort((a, b) => b.created_at - a.created_at);
       $('.tweets').empty();
       renderTweets(data);
@@ -29,7 +27,6 @@ function loadTweets(){
     // calls createTweetElement for each tweet
     const $tweet = createTweetElement(tweet);
     // takes return value and appends it to the tweets container
-    console.log($tweet)
     $('.tweets').append($tweet);
     })
   }
@@ -86,12 +83,14 @@ function loadTweets(){
         $('.new-tweet textarea').val("");
         $('.new-tweet .counter').text(140);
         loadTweets(); 
-        console.log("new tweet submitted")
       });
   });
 
 
-
+  $('.compose').on('click', function(){
+    $('.new-tweet').slideToggle();
+    $('.new-tweet textarea').focus();
+  });
 
 
 
