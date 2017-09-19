@@ -28,12 +28,5 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/jonnyk20/tweeter.git"
-  },
-  "eslintConfig": {
-    "env": {
-        "browser": true,
-        "$": true,
-        "node": true
-    }
-}
+  }
 }

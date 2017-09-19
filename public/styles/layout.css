@@ -41,7 +41,7 @@ body {
   background-color: #eeeeee;
   margin: 10px;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 
@@ -69,17 +69,44 @@ body {
 div.tweet-header {
   padding: 10px;
   background-color: #eeeeee;
+  display: flex;
+  align-items: center;
 }
+
+div.tweet-header .user-icon {
+  height: 50px;
+  width: 50px;
+  border-radius: 50px;
+}
+
+div.tweet-header .name {
+  margin: auto;
+  font-size: 200%;
+  font-weight: bold;
+}
+
+div.tweet-header .handle {
+  margin-left: auto;
+}
+
+
 
 div.tweet-body {
   padding: 10px;
+  min-height: 100px;
 }
 
 div.tweet-footer {
   padding: 10px;
   border-top: solid 1px #eeeeee;
+  font-size: 75%;
 }
 
 div.tweet-footer .tweet-actions {
   float: right;
+  visibility: hidden;
+}
+
+article.tweet:hover .tweet-actions {
+ visibility: visible;
 }

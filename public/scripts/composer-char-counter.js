@@ -1,4 +1,4 @@
-/* eslint-env jquery */
+
 $(function foo() {
   const charMax = 140;
   $('.new-tweet').on('input', 'textarea', () => {
@@ -13,7 +13,3 @@ $(function foo() {
     }
   });
 });
-
-// const fn = function foo(){
-//   return;
-// }
