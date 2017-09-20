@@ -6,8 +6,6 @@
         "jquery": true
     },
     "rules": {
-        "prefer-arrow-callback": [],
-        "no-var": 0
     }
 
 }

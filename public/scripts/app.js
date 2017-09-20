@@ -6,7 +6,7 @@
 /* eslint-disable */
 $(function foo() {
 
-
+// Getting Tweets
 function loadTweets(){
     $.ajax({
     method: "GET",
@@ -31,9 +31,9 @@ function loadTweets(){
     })
   }
 
-  function createTweetElement({user, content, created_at}) {
+  function createTweetElement({user, content, created_at, likes = 5}) {
  
-    const $tweet = $('<article>').addClass('tweet');
+    const $tweet = $('<article>').addClass('tweet').data( 'likes', likes );;
     // ...
     $tweet.html(`
         <div class="tweet-header">
@@ -49,9 +49,12 @@ function loadTweets(){
         <div class="tweet-footer">
           <span class="tweet-time"> ${created_at}</span>
           <div class="tweet-actions">
-            <i class="fa fa-flag" aria-hidden="true"></i>
-            <i class="fa fa-retweet" aria-hidden="true"></i>
-            <i class="fa fa-heart" aria-hidden="true"></i>
+            <i class="fa fa-flag fa-lg" aria-hidden="true"></i>
+            <i class="fa fa-retweet fa-lg" aria-hidden="true"></i>
+          </div>
+          <div class="likes">
+            <span>${likes}<span>
+            <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
           </div>
         </div>
         `);
@@ -59,7 +62,8 @@ function loadTweets(){
   }
 
 
- // new tweet logic 
+
+ // Creating Tweets
 
   $('.new-tweet form').on('submit', function (event) {
     event.preventDefault();
@@ -87,13 +91,20 @@ function loadTweets(){
   });
 
 
+  // Other UI Interactions
+  
+  // Open compose form
+
   $('.compose').on('click', function(){
     $('.new-tweet').slideToggle();
     $('.new-tweet textarea').focus();
   });
 
-
-
+  // Like Tweet
+  $('.tweets').on('click', '.likes .fa' ,function(e){
+     const $tweet = $(e.target).find('.tweet');
+     console.log($tweet.data())
+  });
 
 loadTweets(); 
 });

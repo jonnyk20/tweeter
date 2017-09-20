@@ -119,13 +119,28 @@ div.tweet-footer {
   padding: 10px;
   border-top: solid 1px #eeeeee;
   font-size: 75%;
+  display: flex;
+  justify-content: flex-end;
 }
 
 div.tweet-footer .tweet-actions {
-  float: right;
-  visibility: hidden;
+  margin-right: 30px;
+  /* visibility: hidden; */
 }
 
 article.tweet:hover .tweet-actions {
  visibility: visible;
+}
+
+article.tweet .tweet-actions i{
+  margin-left: 30px;  
+ }
+
+div.tweet-footer .tweet-time {
+  margin-right: auto;
+}
+
+
+div.tweet-footer .likes .fa{
+  margin-left: 5px;
 }
