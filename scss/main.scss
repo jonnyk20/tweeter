@@ -1,0 +1,9 @@
+@import "layout.scss";
+@import "nav.scss";
+
+$badass: red;
+
+body { 
+  margin: 0; 
+  background-color: $badass; 
+}
