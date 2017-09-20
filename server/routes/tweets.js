@@ -43,14 +43,18 @@ module.exports = function (DataHelpers) {
   });
 
   tweetsRoutes.put('/:id', (req, res) => {
-    const { id } = req.params;
-    DataHelpers.updateTweet((err) => {
-      if (err) {
-        res.status(500).json({ error: err.message });
-      } else {
-        res.status(200).send();
-      }
-    }, id);
+
+    // const { id } = req.params;
+    // DataHelpers.updateTweet((err) => {
+    //   if (err) {
+    //     res.status(500).json({ error: err.message });
+    //   } else {
+    //     res.status(200).send();
+    //   }
+    // }, id);
+ console.log(req.body);
+ res.end("put successful")
+
   });
 
   return tweetsRoutes;

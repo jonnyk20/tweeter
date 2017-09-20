@@ -55,11 +55,12 @@ function loadTweets(){
             <i class="fa fa-retweet fa-lg" aria-hidden="true"></i>
           </div>
           <div class="likes">
-            <span>${likes}<span>
+            <span class="likeCount">${likes}</span>
             <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
           </div>
         </div>
         `);
+        $tweet.data('likes', likes).data('user', user.handle).data('tweetID', _id);
     return $tweet;
   }
 
@@ -104,10 +105,17 @@ function loadTweets(){
 
   // Like Tweet
   $('.tweets').on('click', '.likes .fa' ,function(e){
-     //const $tweet = $(e.target).find('.tweet');
+    const $target = $(e.target);
+    const $tweet = $target.closest('.tweet');
+    const likes = $tweet.data('likes');
+    const tweetID = $tweet.data('tweetID')
+    $tweet.find('.likeCount').text( likes + 1 );
      $.ajax({
       method: "PUT",
-      url: "/tweets/59c1922c0dee1f2a6e3109aa",
+      url: "/tweets/" + tweetID,
+      data: {
+        liked: true
+      },
       success: function(){
         console.log("like successful!")
       }
