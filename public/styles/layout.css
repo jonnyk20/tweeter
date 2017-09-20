@@ -25,6 +25,10 @@ body {
  * Additional CSS can be defined below or in other CSS files, as per instructions
  */
 
+ .container {
+   max-width: 430px;
+ }
+
 .error {
  color: red;
 }
@@ -147,4 +151,16 @@ div.tweet-footer .tweet-time {
 
 div.tweet-footer .likes .fa{
   margin-left: 5px;
+}
+
+.modal-header {
+  background-color: #daffdb;
+  border-radius: 10px 10px 0 0;
+}
+
+.modal-content {
+  border-radius: 15px;
+}
+.modal-footer {
+  border-radius: 15px;
 }

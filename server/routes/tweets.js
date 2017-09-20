@@ -1,11 +1,10 @@
-
-
 const userHelper = require('../lib/util/user-helper');
 
 const express = require('express');
 
 const tweetsRoutes = express.Router();
 
+/* eslint-disable */
 module.exports = function (DataHelpers) {
   tweetsRoutes.get('/', (req, res) => {
     DataHelpers.getTweets((err, tweets) => {
@@ -54,6 +53,5 @@ module.exports = function (DataHelpers) {
     }, id, liked);
     res.end("put successful");
   });
-
   return tweetsRoutes;
 };

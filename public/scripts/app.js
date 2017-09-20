@@ -18,7 +18,6 @@ function loadTweets(){
       renderTweets(data);
     }
   })
-
 }
 
   function renderTweets(tweets) {
