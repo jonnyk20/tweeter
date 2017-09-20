@@ -60,7 +60,7 @@ function loadTweets(){
           </div>
         </div>
         `);
-        $tweet.data('likes', likes).data('user', user.handle).data('tweetID', _id);
+        $tweet.data('likes', likes).data('user', user.handle).data('tweetID', _id).data('liked', false);
     return $tweet;
   }
 
@@ -108,13 +108,27 @@ function loadTweets(){
     const $target = $(e.target);
     const $tweet = $target.closest('.tweet');
     const likes = $tweet.data('likes');
-    const tweetID = $tweet.data('tweetID')
-    $tweet.find('.likeCount').text( likes + 1 );
+    const tweetID = $tweet.data('tweetID');
+    let liked;
+    if ($tweet.data('liked') === false) {
+      liked = false;
+      $tweet.data('liked', true);
+      $tweet.data('likes', likes + 1);
+      $tweet.find('.likeCount').text( likes + 1 );
+      $tweet.find('.likes').addClass('liked-tweet');
+    } else {
+      liked = true;
+      $tweet.data('liked', false);
+      $tweet.data('likes', likes - 1);
+      $tweet.find('.likeCount').text( likes - 1 );
+      $tweet.find('.likes').removeClass('liked-tweet');
+    }
+    
      $.ajax({
       method: "PUT",
       url: "/tweets/" + tweetID,
       data: {
-        liked: true
+        liked: liked
       },
       success: function(){
         console.log("like successful!")

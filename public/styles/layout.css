@@ -136,6 +136,10 @@ article.tweet .tweet-actions i{
   margin-left: 30px;  
  }
 
+.liked-tweet {
+  color: #00a887;
+ }
+
 div.tweet-footer .tweet-time {
   margin-right: auto;
 }
