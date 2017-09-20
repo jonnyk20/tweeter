@@ -31,7 +31,7 @@ function loadTweets(){
     })
   }
 
-  function createTweetElement({user, content, created_at, likes = 5}) {
+  function createTweetElement({user, content, created_at, _id, likes = 5}) {
  
     const $tweet = $('<article>').addClass('tweet').data( 'likes', likes );;
     // ...
@@ -44,6 +44,8 @@ function loadTweets(){
 
         <div class="tweet-body">
         ${content.text}
+        <hr>
+        <div class="id">ID:  ${_id} </div>
         </div>
 
         <div class="tweet-footer">
@@ -102,8 +104,14 @@ function loadTweets(){
 
   // Like Tweet
   $('.tweets').on('click', '.likes .fa' ,function(e){
-     const $tweet = $(e.target).find('.tweet');
-     console.log($tweet.data())
+     //const $tweet = $(e.target).find('.tweet');
+     $.ajax({
+      method: "PUT",
+      url: "/tweets/59c1922c0dee1f2a6e3109aa",
+      success: function(){
+        console.log("like successful!")
+      }
+    })
   });
 
 loadTweets(); 
