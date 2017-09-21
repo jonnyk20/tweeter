@@ -13,6 +13,12 @@ module.exports = function makeUserDataHelpers(db) {
     });
     },
 
+    checkUser: function(userToCheck, callback) {
+      db.collection("users").findOne({ handle: "user2"}, function(err, userFound){
+        callback(null, userFound);
+    });
+    },
+
     // Get all tweets in `db`, sorted by newest first
     // getTweets: function(callback) {
     //   db.collection("tweets").find().toArray((err, tweets) => {

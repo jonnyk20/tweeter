@@ -8,7 +8,6 @@ const usersRoutes = express.Router();
 module.exports = function (userDataHelpers) {
 
   usersRoutes.get('/', (req, res) => {
-    console.log(req.session);
     res.send(req.session);
   });
 
@@ -25,15 +24,41 @@ module.exports = function (userDataHelpers) {
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
-        console.log("new user is: ");
-        console.log(newUserReturn);
         req.session.uid = newUserReturn._id;
         req.session.handle = newUserReturn.handle;
         req.session.name = newUserReturn.name;
+        req.session.avatar = newUserReturn.avatar;
         res.status(201).send(req.session.uid);
       }
     });
   });
+
+
+  usersRoutes.post('/login', (req, res) => {
+    userDataHelpers.checkUser(req.body, (err, userFound) => {
+      if (err) {
+        res.status(500).json({ error: err.message });
+      } else {
+        if (userFound.password === req.body.password){
+          console.log("password match");
+        } else {
+          console.log("password not matching");
+        }
+
+
+        // req.session.uid = newUserReturn._id;
+        // req.session.handle = newUserReturn.handle;
+        // req.session.name = newUserReturn.name;
+        // req.session.avatar = newUserReturn.avatar;
+        // res.status(201).send(req.session.uid);
+      }
+    });
+    res.send("relax");
+   });
+
+
+
+
 
   usersRoutes.post('/logout', (req, res) => {
     req.session = null;

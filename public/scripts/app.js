@@ -5,7 +5,8 @@
  */
 /* eslint-disable */
 $(function foo() {
-  const user = {}
+  const user = {};
+  const noUserIcon = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Question_mark_white-transparent.svg/2000px-Question_mark_white-transparent.svg.png";
 
 // get logged in user
 function getUser(){
@@ -16,7 +17,9 @@ function getUser(){
       user.name = data.name;
       user.handle = data.handle;
       user.id = data.id;
+      user.avatar = data.avatar;
       $('#user').text("@"+ user.handle);
+      $('.logged-in-avatar img').attr("src", (user.avatar || noUserIcon ));
       loadTweets(); 
     }
   })
@@ -161,28 +164,70 @@ function loadTweets(){
 
 
   // register submit
-  $('.modal').on('submit', '#register', function (event) {
+  $('#register-modal').on('submit', '#register-form', function (event) {
     event.preventDefault();
     const data = $(this).serialize();
-    $('#register input').each(function() {
+    console.log(data);
+    let valid = true;
+    $('#register-form input').each(function() {
       if(!$(this).val()){
-          alert('Some fields are empty');
-         return false;
+          valid = false;
+          return;
       }
     });
+    if (!valid){
+      alert('Some fields are empty');
+      return;
+    }
 
     $.ajax({
       method: "POST",
       url: "/users/register",
       data: data
     })
-      .done(function( data ) {
-        $('myModal').modal('close');
+      .done(function() {
+        $('#register-modal').modal('hide');
+        getUser();
       })
       .fail(function( jqXHR, textStatus, errorThrown) {
-        alert( "Text Status: ",textStatus );
+        alert( "Text Status: ", errorThrown );
       });
   });
+
+
+  // login
+  $('#login-modal').on('submit', '#login-form', function (event) {
+    event.preventDefault();
+    const data = $(this).serialize();
+    console.log(data);
+    let valid = true;
+    $('#login-form input').each(function() {
+      if(!$(this).val()){
+          valid = false;
+          return;
+      }
+    });
+    if (!valid){
+      alert('Some fields are empty');
+      return;
+    }
+
+    $.ajax({
+      method: "POST",
+      url: "/users/login",
+      data: data
+    })
+      .done(function( data ) {
+        console.log(data)
+        $('#login-modal').modal('hide');
+        getUser();
+      })
+      .fail(function( jqXHR, textStatus, errorThrown) {
+        alert( "Text Status: ", errorThrown );
+      });
+  });
+
+
 
   // logout
   $('nav').on('click', '#logout', function bar() {

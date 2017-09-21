@@ -39,9 +39,13 @@
         </button>
       </div>
       <div class="nav-section auth">
+        <div class="logged-in-avatar">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Question_mark_white-transparent.svg/2000px-Question_mark_white-transparent.svg.png">
+        </div>
         <p>Logged in as: <span id="user"> &lt; User &gt; </span></p>
 
-        <a data-toggle="modal" data-target="#myModal"> <button class="btn btn-primary"> Register </button></a>
+        <a data-toggle="modal" data-target="#register-modal"> <button class="btn btn-primary"> Register </button></a>
+        <a data-toggle="modal" data-target="#login-modal"> <button class="btn btn-primary"> Login </button></a>
         <button class="btn btn-default" id="logout"> Logout </button>
       </div>
     </nav>
@@ -64,17 +68,17 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="register-modal-label" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-          <h4 class="modal-title" id="myModalLabel">Register</h4>
+          <h4 class="modal-title" id="register-modal-label">Register</h4>
         </div>
         <div class="modal-body">
-          <form method="POST" id="register" action="/users/register">
+          <form method="POST" id="register-form" action="/users/register">
             <div class="form-group">
               <label for="handle">Name:</label>
               <input id="name" type="text" name="name" placeholder="John Smith" class="form-control">
@@ -88,20 +92,61 @@
               <input id="password" type="password" name="password" class="form-control">
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Register</button>
-                <span class="auth-error error"> Please fill in all fields</span>
+              <label for="avatar">Avatar Image:</label>
+              <input id="avatar" type="url" name="avatar" value="https://www.fillmurray.com/50/50" class="form-control" readonly="readonly">
             </div>
-              
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
           </form>
         </div>
         <div class="modal-footer">
-          
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
       </div>
     </div>
   </div>
   
+
+  <!-- Login Modal -->
+  <!-- Modal -->
+  <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="login-modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+          <h4 class="modal-title" id="login-modal-label">Log In</h4>
+        </div>
+        <div class="modal-body">
+          <form method="POST" id="login-form" action="/users/login">
+            <div class="form-group">
+              <label for="handle">Handle:</label>&nbsp;&nbsp;<span class="handle-preview">@username</span>
+              <input id="handle2" type="text" name="handle" placeholder="username" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="password">Password:</label>
+              <input id="password2" type="password" name="password" class="form-control">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Log in</button>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
 
 
 

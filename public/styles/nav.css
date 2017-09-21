@@ -21,6 +21,24 @@
   display: inline;
 }
 
+.auth * {
+  display: inline;
+}
+
+#nav-bar div.logged-in-avatar {
+  padding: 5px;
+  margin: 10px;
+  background-color: transparent;
+  display: inline-block;
+  border-radius: 5px;
+  border: solid 2px white;
+}
+
+#nav-bar div.logged-in-avatar img{
+  height: 50px;
+  width: 50px;
+}
+
 #nav-bar .header {
   float: left;
   font-size: 2em;
