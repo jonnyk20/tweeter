@@ -129,11 +129,51 @@ function loadTweets(){
       data: {
         liked: liked
       },
-      success: function(){
+      success: function(data){
         console.log("like successful!")
       }
     })
   });
+
+
+
+
+  // user authentication
+
+
+  //register
+  $('.modal').on('submit', '#register', function (event) {
+    event.preventDefault();
+    const data = $(this).serialize();
+    console.log(data);
+
+    $('#register input').each(function() {
+      if(!$(this).val()){
+          alert('Some fields are empty');
+         return false;
+      }
+    });
+    
+    // const data = $( this ).serialize() ;
+    $.ajax({
+      method: "POST",
+      url: "/users/register",
+      data: data
+    })
+      .done(function( msg ) {
+        console.log(msg);
+      })
+      .fail(function( jqXHR, textStatus, errorThrown) {
+        console.log( "Text Status: ",textStatus );
+        console.log( "Error Thrown: ",errorThrown );
+        window.xxx = jqXHR;
+      });
+  });
+
+
+
+
+
 
 loadTweets(); 
 });

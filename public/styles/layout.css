@@ -161,6 +161,6 @@ div.tweet-footer .likes .fa{
 .modal-content {
   border-radius: 15px;
 }
-.modal-footer {
-  border-radius: 15px;
+.modal .auth-error {
+  display: none;
 }
