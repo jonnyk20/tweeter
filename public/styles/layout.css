@@ -129,7 +129,7 @@ div.tweet-footer {
 
 div.tweet-footer .tweet-actions {
   margin-right: 30px;
-  /* visibility: hidden; */
+  visibility: hidden;
 }
 
 article.tweet:hover .tweet-actions {

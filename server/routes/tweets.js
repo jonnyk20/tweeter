@@ -21,8 +21,9 @@ module.exports = function (DataHelpers) {
       res.status(400).json({ error: 'invalid request: no data in POST body' });
       return;
     }
-    
-    const user = req.body.user ? req.body.user : userHelper.generateRandomUser();
+
+    res.end();
+    const user = req.body.user //? req.body.user : userHelper.generateRandomUser();
     const tweet = {
       user,
       content: {
@@ -43,6 +44,7 @@ module.exports = function (DataHelpers) {
 
   tweetsRoutes.put('/:id', (req, res) => {
     const liked = JSON.parse(req.body.liked);
+    const liker =  req.body.liker;
     const { id } = req.params;
     DataHelpers.updateTweet((err) => {
       if (err) {
@@ -50,7 +52,7 @@ module.exports = function (DataHelpers) {
       } else {
         res.status(200).send();
       }
-    }, id, liked);
+    }, id, liked, liker);
     res.end("put successful");
   });
   return tweetsRoutes;

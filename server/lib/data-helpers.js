@@ -20,9 +20,14 @@ module.exports = function makeDataHelpers(db) {
       });
     },
 
-    updateTweet: function(callback, id, liked) {
+    updateTweet: function(callback, id, liked, liker) {
       const change = liked ? -1 : 1;
       const mongoID = require('mongodb').ObjectID(id);
+      if (liked){
+        db.collection("tweets").updateOne({'_id': mongoID },{ $pull: { likedBy: liker } });
+      } else {
+        db.collection("tweets").updateOne({ '_id': mongoID  },{ $push: { likedBy: liker } });
+      }
       db.collection("tweets").updateOne({'_id': mongoID }, {$inc: { likes: change }} , (err, tweet) => {
         if (err) throw err;
         callback(null, tweet);

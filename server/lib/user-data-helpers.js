@@ -14,27 +14,10 @@ module.exports = function makeUserDataHelpers(db) {
     },
 
     checkUser: function(userToCheck, callback) {
-      db.collection("users").findOne({ handle: "user2"}, function(err, userFound){
+      db.collection("users").findOne({ handle: userToCheck.handle}, function(err, userFound){
         callback(null, userFound);
     });
     },
-
-    // Get all tweets in `db`, sorted by newest first
-    // getTweets: function(callback) {
-    //   db.collection("tweets").find().toArray((err, tweets) => {
-    //     if (err) throw err;
-    //     callback(null, tweets);
-    //   });
-    // },
-
-    // updateTweet: function(callback, id, liked) {
-    //   const change = liked ? -1 : 1;
-    //   const mongoID = require('mongodb').ObjectID(id);
-    //   db.collection("tweets").updateOne({'_id': mongoID }, {$inc: { likes: change }} , (err, tweet) => {
-    //     if (err) throw err;
-    //     callback(null, tweet);
-    //   });
-    // }
 
   };
 }

@@ -16,10 +16,10 @@ function getUser(){
     success: function(data){
       user.name = data.name;
       user.handle = data.handle;
-      user.id = data.id;
-      user.avatar = data.avatar;
+      user.id = data.uid;
+      user.avatars = {small: data.avatar};
       $('#user').text("@"+ user.handle);
-      $('.logged-in-avatar img').attr("src", (user.avatar || noUserIcon ));
+      $('.logged-in-avatar img').attr("src", (user.avatars.small || noUserIcon ));
       loadTweets(); 
     }
   })
@@ -44,13 +44,13 @@ function loadTweets(){
     // loops through tweets
     tweets.forEach((tweet)=>{
     // calls createTweetElement for each tweet
-    const $tweet = createTweetElement(tweet);
+    const $tweet = createTweetElement(tweet, user);
     // takes return value and appends it to the tweets container
     $('.tweets').append($tweet);
     })
   }
 
-  function createTweetElement({user, content, created_at, _id, likes = 5}) {
+  function createTweetElement({user, content, created_at, _id, likes, likedBy}, loggedInUser) {
  
     const $tweet = $('<article>').addClass('tweet').data( 'likes', likes );;
     // ...
@@ -58,7 +58,7 @@ function loadTweets(){
         <div class="tweet-header">
           <img class="user-icon" src="${user.avatars.small}">
           <span class="name"> ${user.name} </span>
-          <span class="handle"> ${user.handle} </span>
+          <span class="handle"> ${user.handle[0] === "@"? user.handle : "@" + user.handle} </span>
         </div>
 
         <div class="tweet-body">
@@ -80,6 +80,12 @@ function loadTweets(){
         </div>
         `);
         $tweet.data('likes', likes).data('user', user.handle).data('tweetID', _id).data('liked', false);
+        if (likedBy.includes(loggedInUser.id)){
+          $tweet.data('liked', true);
+          $tweet.find('.likes').addClass('liked-tweet');
+        }
+
+
     return $tweet;
   }
 
@@ -99,11 +105,15 @@ function loadTweets(){
       return;
     }
     
-    const data = $( this ).serialize() ;
+    const tweetText = $('.new-tweet textarea').val();
+
+
     $.ajax({
       method: "POST",
       url: "/tweets",
-      data: data
+      data: { text: tweetText,
+              user: user
+      }
     })
       .done(function( msg ) {
         $('.new-tweet textarea').val("");
@@ -147,7 +157,8 @@ function loadTweets(){
       method: "PUT",
       url: "/tweets/" + tweetID,
       data: {
-        liked: liked
+        liked: liked,
+        liker: user.id
       }
     })
   });
@@ -167,7 +178,6 @@ function loadTweets(){
   $('#register-modal').on('submit', '#register-form', function (event) {
     event.preventDefault();
     const data = $(this).serialize();
-    console.log(data);
     let valid = true;
     $('#register-form input').each(function() {
       if(!$(this).val()){
@@ -199,7 +209,6 @@ function loadTweets(){
   $('#login-modal').on('submit', '#login-form', function (event) {
     event.preventDefault();
     const data = $(this).serialize();
-    console.log(data);
     let valid = true;
     $('#login-form input').each(function() {
       if(!$(this).val()){
@@ -218,12 +227,11 @@ function loadTweets(){
       data: data
     })
       .done(function( data ) {
-        console.log(data)
         $('#login-modal').modal('hide');
         getUser();
       })
       .fail(function( jqXHR, textStatus, errorThrown) {
-        alert( "Text Status: ", errorThrown );
+        alert( "Invalid Login" );
       });
   });
 
@@ -236,7 +244,6 @@ function loadTweets(){
       url: "/users/logout"
     })
       .done(function(data){
-        console.log("logged out ajax successful")
         getUser();
       });
   })

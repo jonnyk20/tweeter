@@ -1,6 +1,7 @@
 // const userHelper = require('../lib/util/user-helper');
 
 const express = require('express');
+const bcrypt = require('bcrypt');
 
 const usersRoutes = express.Router();
 
@@ -20,6 +21,9 @@ module.exports = function (userDataHelpers) {
     if (req.body.name === "" || req.body.handle === "" || req.body.password === "" ){
       res.status(400).send('Please fill in all fields!')
     }
+    console.log(req.body);
+    req.body.password = bcrypt.hashSync(req.body.password, 10);
+    console.log(req.body);
     userDataHelpers.registerUser(req.body, (err, newUserReturn) => {
       if (err) {
         res.status(500).json({ error: err.message });
@@ -28,7 +32,7 @@ module.exports = function (userDataHelpers) {
         req.session.handle = newUserReturn.handle;
         req.session.name = newUserReturn.name;
         req.session.avatar = newUserReturn.avatar;
-        res.status(201).send(req.session.uid);
+        res.status(201).send(req.session);
       }
     });
   });
@@ -39,21 +43,20 @@ module.exports = function (userDataHelpers) {
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
-        if (userFound.password === req.body.password){
-          console.log("password match");
-        } else {
+        if ( !userFound.password ||
+          !bcrypt.compareSync(req.body.password, userFound.password)){
+          res.status(400).send("wrong combo");
           console.log("password not matching");
+        } else {
+          console.log("password match");
+          req.session.uid = userFound._id;
+          req.session.handle = userFound.handle;
+          req.session.name = userFound.name;
+          req.session.avatar = userFound.avatar;
+          res.status(201).send(req.session);
         }
-
-
-        // req.session.uid = newUserReturn._id;
-        // req.session.handle = newUserReturn.handle;
-        // req.session.name = newUserReturn.name;
-        // req.session.avatar = newUserReturn.avatar;
-        // res.status(201).send(req.session.uid);
       }
     });
-    res.send("relax");
    });
 
 
