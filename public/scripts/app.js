@@ -17,14 +17,22 @@ function getUser(){
       user.name = data.name;
       user.handle = data.handle;
       user.id = data.uid;
-      user.avatars = {small: data.avatar};
+      user.avatars = { small: data.avatar };
       $('#user').text("@"+ user.handle);
       $('.logged-in-avatar img').attr("src", (user.avatars.small || noUserIcon ));
+      if (user.handle){
+        $('.logged-in-info').show();
+        $('.logged-out-info').hide();
+      } else {
+        $('.logged-in-info').hide();
+        $('.logged-out-info').show();
+      }
       loadTweets(); 
     }
   })
 }
 getUser();
+
 
 // getting Tweets
 function loadTweets(){
@@ -85,7 +93,6 @@ function loadTweets(){
           $tweet.find('.likes').addClass('liked-tweet');
         }
 
-
     return $tweet;
   }
 
@@ -106,8 +113,6 @@ function loadTweets(){
     }
     
     const tweetText = $('.new-tweet textarea').val();
-
-
     $.ajax({
       method: "POST",
       url: "/tweets",
@@ -139,6 +144,10 @@ function loadTweets(){
     const likes = $tweet.data('likes');
     const tweetID = $tweet.data('tweetID');
     let liked;
+    if (user.handle === $tweet.data('user') || !user.handle)
+      {
+        return;
+      }
     if ($tweet.data('liked') === false) {
       liked = false;
       $tweet.data('liked', true);

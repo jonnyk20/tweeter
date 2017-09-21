@@ -39,14 +39,22 @@
         </button>
       </div>
       <div class="nav-section auth">
-        <div class="logged-in-avatar">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Question_mark_white-transparent.svg/2000px-Question_mark_white-transparent.svg.png">
+        
+        <div class="logged-in-info">
+          <div class="logged-in-avatar">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Question_mark_white-transparent.svg/2000px-Question_mark_white-transparent.svg.png">
+          </div>
+          <p>Logged in as: <span id="user"> &lt; User &gt; </span></p>
+          <button class="btn btn-default" id="logout"> Logout </button>
         </div>
-        <p>Logged in as: <span id="user"> &lt; User &gt; </span></p>
 
-        <a data-toggle="modal" data-target="#register-modal"> <button class="btn btn-primary"> Register </button></a>
-        <a data-toggle="modal" data-target="#login-modal"> <button class="btn btn-primary"> Login </button></a>
-        <button class="btn btn-default" id="logout"> Logout </button>
+        <div class="logged-out-info">
+            <span> Your are not Logged in. Please log in or register</span>
+            <a data-toggle="modal" data-target="#register-modal"> <button class="btn btn-primary"> Register </button></a>
+            <a data-toggle="modal" data-target="#login-modal"> <button class="btn btn-primary"> Login </button></a>
+        </div>
+
+
       </div>
     </nav>
     <!-- Page-specific (main) content here -->

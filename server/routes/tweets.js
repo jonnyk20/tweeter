@@ -31,6 +31,7 @@ module.exports = function (DataHelpers) {
       },
       created_at: Date.now(),
       likes: 0,
+      likedBy: []
     };
 
     DataHelpers.saveTweet(tweet, (err) => {
