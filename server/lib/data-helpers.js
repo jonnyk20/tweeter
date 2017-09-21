@@ -1,5 +1,5 @@
-"use strict";
 /*eslint-disable*/
+"use strict";
 // Simulates the kind of delay we see with network or filesystem operations
 
 // Defines helper functions for saving and getting tweets, using the database `db`

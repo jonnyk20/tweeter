@@ -139,9 +139,14 @@ function loadTweets(){
 
 
   // user authentication
+  
+   // user handle preview
+  $('.modal').on('input', '#handle', function bar(e) {
+    $('.handle-preview').text("@" + e.target.value);
+  })
 
 
-  //register
+  // register submit
   $('.modal').on('submit', '#register', function (event) {
     event.preventDefault();
     const data = $(this).serialize();
@@ -153,15 +158,15 @@ function loadTweets(){
          return false;
       }
     });
+
     
-    // const data = $( this ).serialize() ;
     $.ajax({
       method: "POST",
       url: "/users/register",
       data: data
     })
-      .done(function( msg ) {
-        console.log(msg);
+      .done(function( data ) {
+        console.log(data);
       })
       .fail(function( jqXHR, textStatus, errorThrown) {
         console.log( "Text Status: ",textStatus );

@@ -41,7 +41,7 @@
       <div class="nav-section auth">
         <p>Logged in as: <span> &lt; User &gt; </span></p>
 
-        <a data-toggle="modal" data-target="#myModal"> <button class="btn btn-primary"> Simple Text </button></a>
+        <a data-toggle="modal" data-target="#myModal"> <button class="btn btn-primary"> Register </button></a>
 
       </div>
     </nav>
@@ -77,18 +77,18 @@
           <form method="POST" id="register" action="/users/register">
             <div class="form-group">
               <label for="handle">Name:</label>
-              <input id="handle" type="text" name="name" placeholder="John Smith" class="form-control">
+              <input id="name" type="text" name="name" placeholder="John Smith" class="form-control">
             </div>
             <div class="form-group">
-              <label for="handle">Handle:</label>
-              <input id="handle" type="text" name="handle" placeholder="@user" class="form-control">
+              <label for="handle">Handle:</label>&nbsp;&nbsp;<span class="handle-preview">@username</span>
+              <input id="handle" type="text" name="handle" placeholder="username" class="form-control">
             </div>
             <div class="form-group">
               <label for="password">Password:</label>
               <input id="password" type="password" name="password" class="form-control">
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn-primary">Register</button>
                 <span class="auth-error error"> Please fill in all fields</span>
             </div>
               
