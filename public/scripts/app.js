@@ -5,8 +5,25 @@
  */
 /* eslint-disable */
 $(function foo() {
+  const user = {}
 
-// Getting Tweets
+// get logged in user
+function getUser(){
+  $.ajax({
+    method: "GET",
+    url: "/users",
+    success: function(data){
+      user.name = data.name;
+      user.handle = data.handle;
+      user.id = data.id;
+      $('#user').text("@"+ user.handle);
+      loadTweets(); 
+    }
+  })
+}
+getUser();
+
+// getting Tweets
 function loadTweets(){
     $.ajax({
     method: "GET",
@@ -128,9 +145,6 @@ function loadTweets(){
       url: "/tweets/" + tweetID,
       data: {
         liked: liked
-      },
-      success: function(data){
-        console.log("like successful!")
       }
     })
   });
@@ -150,8 +164,6 @@ function loadTweets(){
   $('.modal').on('submit', '#register', function (event) {
     event.preventDefault();
     const data = $(this).serialize();
-    console.log(data);
-
     $('#register input').each(function() {
       if(!$(this).val()){
           alert('Some fields are empty');
@@ -159,26 +171,33 @@ function loadTweets(){
       }
     });
 
-    
     $.ajax({
       method: "POST",
       url: "/users/register",
       data: data
     })
       .done(function( data ) {
-        console.log(data);
+        $('myModal').modal('close');
       })
       .fail(function( jqXHR, textStatus, errorThrown) {
-        console.log( "Text Status: ",textStatus );
-        console.log( "Error Thrown: ",errorThrown );
-        window.xxx = jqXHR;
+        alert( "Text Status: ",textStatus );
       });
   });
 
+  // logout
+  $('nav').on('click', '#logout', function bar() {
+    $.ajax({
+      method: "POST",
+      url: "/users/logout"
+    })
+      .done(function(data){
+        console.log("logged out ajax successful")
+        getUser();
+      });
+  })
 
 
 
 
 
-loadTweets(); 
 });

@@ -9,7 +9,7 @@ module.exports = function makeUserDataHelpers(db) {
     // Saves a user to `db`
     registerUser: function(newUser, callback) {
       db.collection("users").insertOne(newUser, function(err, userInserted){
-        callback(null, userInserted.ops);
+        callback(null, userInserted.ops[0]);
     });
     },
 

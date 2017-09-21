@@ -8,8 +8,24 @@ const bodyParser    = require("body-parser");
 const app           = express();
 const { MongoClient } = require("mongodb");
 const MONGODB_URI = "mongodb://localhost:27017/tweeter";
+const cookieSession = require('cookie-session');
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2'],
+}));
+
+// local variables
+app.use((req, res, next) => {
+  const userID = req.session.user_id;
+  res.locals = {
+    user: userID,
+  };
+  next();
+});
+
+ // static files, including home page
 app.use(express.static("public"));
 
 // The in-memory database of tweets. It's a basic object with an array in it.
