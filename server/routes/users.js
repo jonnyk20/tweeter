@@ -1,33 +1,29 @@
-// const userHelper = require('../lib/util/user-helper');
-
 const express = require('express');
 const bcrypt = require('bcrypt');
 
 const usersRoutes = express.Router();
 
-/* eslint-disable */
+
 module.exports = function (userDataHelpers) {
 
+  // return info about logged-in user
   usersRoutes.get('/', (req, res) => {
     res.send(req.session);
   });
 
-  usersRoutes.post('/', (req, res) => {
-   // res.json([{key: "value"}, {message: "text"}]);
-   res.end("posted to user");
-  });
-
   usersRoutes.post('/register', (req , res) => {
-    if (req.body.name === "" || req.body.handle === "" || req.body.password === "" ){
+    // check for blank fields
+    if (req.body.name === '' || req.body.handle === '' || req.body.password === '' ){
       res.status(400).send('Please fill in all fields!')
     }
-    console.log(req.body);
+    // hash password
     req.body.password = bcrypt.hashSync(req.body.password, 10);
-    console.log(req.body);
+    // save password to database
     userDataHelpers.registerUser(req.body, (err, newUserReturn) => {
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
+        // save user info to cookes
         req.session.uid = newUserReturn._id;
         req.session.handle = newUserReturn.handle;
         req.session.name = newUserReturn.name;
@@ -39,16 +35,17 @@ module.exports = function (userDataHelpers) {
 
 
   usersRoutes.post('/login', (req, res) => {
+    // check if user exists
     userDataHelpers.checkUser(req.body, (err, userFound) => {
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
+        // check if password matches
         if ( !userFound.password ||
           !bcrypt.compareSync(req.body.password, userFound.password)){
-          res.status(400).send("wrong combo");
-          console.log("password not matching");
+          res.status(400).send('wrong username or password');
         } else {
-          console.log("password match");
+          // save user info to cookies
           req.session.uid = userFound._id;
           req.session.handle = userFound.handle;
           req.session.name = userFound.name;
@@ -60,15 +57,10 @@ module.exports = function (userDataHelpers) {
    });
 
 
-
-
-
   usersRoutes.post('/logout', (req, res) => {
     req.session = null;
     res.send(null);
    });
-
-
 
   return usersRoutes;
 };

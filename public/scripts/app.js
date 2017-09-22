@@ -3,50 +3,28 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
-/* eslint-disable */
+
 $(function foo() {
   const user = {};
-  const noUserIcon = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Question_mark_white-transparent.svg/2000px-Question_mark_white-transparent.svg.png";
-
-// get logged in user
-function getUser(){
-  $.ajax({
-    method: "GET",
-    url: "/users",
-    success: function(data){
-      user.name = data.name;
-      user.handle = data.handle;
-      user.id = data.uid;
-      user.avatars = { small: data.avatar };
-      $('#user').text("@"+ user.handle);
-      $('.logged-in-avatar img').attr("src", (user.avatars.small || noUserIcon ));
-      if (user.handle){
-        $('.logged-in-info').show();
-        $('.logged-out-info').hide();
-      } else {
-        $('.logged-in-info').hide();
-        $('.logged-out-info').show();
-      }
-      loadTweets(); 
-    }
-  })
-}
-getUser();
+  const noUserIcon = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Question_mark_white-transparent.svg/2000px-Question_mark_white-transparent.svg.png';
 
 
-// getting Tweets
-function loadTweets(){
+  /* *************            ************************************     */
+  /*               Getting Tweets           *********       */
+ //////////////////////////////////////////////////////////// 
+
+  function loadTweets(){
     $.ajax({
-    method: "GET",
-    url: "/tweets",
-    dataType: 'json',
-    success: function(data){
-      data = data.sort((a, b) => b.created_at - a.created_at);
-      $('.tweets').empty();
-      renderTweets(data);
-    }
-  })
-}
+      method: 'GET',
+      url: '/tweets',
+      dataType: 'json',
+      success: function(data){
+        data = data.sort((a, b) => b.created_at - a.created_at);
+        $('.tweets').empty();
+        renderTweets(data);
+      },
+    });
+  }
 
   function renderTweets(tweets) {
     // loops through tweets
@@ -55,35 +33,34 @@ function loadTweets(){
     const $tweet = createTweetElement(tweet, user);
     // takes return value and appends it to the tweets container
     $('.tweets').append($tweet);
-    })
+    });
   }
 
   function createTweetElement({user, content, created_at, _id, likes, likedBy}, loggedInUser) {
- 
     const $tweet = $('<article>').addClass('tweet').data( 'likes', likes );;
     // ...
     $tweet.html(`
-        <div class="tweet-header">
-          <img class="user-icon" src="${user.avatars.small}">
-          <span class="name"> ${user.name} </span>
-          <span class="handle"> ${user.handle[0] === "@"? user.handle : "@" + user.handle} </span>
+        <div class='tweet-header'>
+          <img class='user-icon' src='${user.avatars.small}'>
+          <span class='name'> ${user.name} </span>
+          <span class='handle'> ${user.handle[0] === '@'? user.handle : '@' + user.handle} </span>
         </div>
 
-        <div class="tweet-body">
+        <div class='tweet-body'>
         ${content.text}
         <hr>
-        <div class="id">ID:  ${_id} </div>
+        <div class='id'>ID:  ${_id} </div>
         </div>
 
-        <div class="tweet-footer">
-          <span class="tweet-time"> ${created_at}</span>
-          <div class="tweet-actions">
-            <i class="fa fa-flag fa-lg" aria-hidden="true"></i>
-            <i class="fa fa-retweet fa-lg" aria-hidden="true"></i>
+        <div class='tweet-footer'>
+          <span class='tweet-time'> ${created_at}</span>
+          <div class='tweet-actions'>
+            <i class='fa fa-flag fa-lg' aria-hidden='true'></i>
+            <i class='fa fa-retweet fa-lg' aria-hidden='true'></i>
           </div>
-          <div class="likes">
-            <span class="likeCount">${likes}</span>
-            <i class="fa fa-heart fa-lg" aria-hidden="true"></i>
+          <div class='likes'>
+            <span class='likeCount'>${likes}</span>
+            <i class='fa fa-heart fa-lg' aria-hidden='true'></i>
           </div>
         </div>
         `);
@@ -98,10 +75,15 @@ function loadTweets(){
 
 
 
- // Creating Tweets
+   ////////////////////////////////////////////////////////////
+  //*********       Creating New Tweet          *********  ///
+ ////////////////////////////////////////////////////////////
 
   $('.new-tweet form').on('submit', function (event) {
     event.preventDefault();
+    if (!user.handle){
+      return;
+    }
 
     // Prevent logn tweet from being submitted
     if ($('.new-tweet textarea').val().length > 140){
@@ -114,25 +96,155 @@ function loadTweets(){
     
     const tweetText = $('.new-tweet textarea').val();
     $.ajax({
-      method: "POST",
-      url: "/tweets",
+      method: 'POST',
+      url: '/tweets',
       data: { text: tweetText,
-              user: user
-      }
+              user: user,
+      },
     })
       .done(function( msg ) {
-        $('.new-tweet textarea').val("");
+        $('.new-tweet textarea').val('');
         $('.new-tweet .counter').text(140);
         loadTweets(); 
       });
   });
 
 
-  // Other UI Interactions
+
+
+
+
+
+   ////////////////////////////////////////////////////////////
+  //*********       User Athentication        *********    ///
+ //////////////////////////////////////////////////////////// 
+
+ // get active user
+
+  function getUser(){
+    $.ajax({
+      method: 'GET',
+      url: '/users',
+      success: function(data){
+        user.name = data.name;
+        user.handle = data.handle;
+        user.id = data.uid;
+        user.avatars = { small: data.avatar };
+        $('#user').text('@'+ user.handle);
+        $('.logged-in-avatar img').attr('src', (user.avatars.small || noUserIcon ));
+        if (user.handle){
+          $('.logged-in-info').show();
+          $('.logged-out-info').hide();
+        } else {
+          $('.logged-in-info').hide();
+          $('.logged-out-info').show();
+        }
+        loadTweets(); 
+      },
+    });
+  }
+  getUser();
+
+
+
+
+
+  // ruser registration
+
+  $('#register-modal').on('submit', '#register-form', function (event) {
+    event.preventDefault();
+    const data = $(this).serialize();
+    let valid = true;
+    $('#register-form input').each(function() {
+      if(!$(this).val()){
+          valid = false;
+          return;
+      }
+    });
+    if (!valid){
+      alert('Some fields are empty');
+      return;
+    }
+
+    $.ajax({
+      method: 'POST',
+      url: '/users/register',
+      data: data,
+    })
+      .done(function() {
+        $('#register-modal').modal('hide');
+        getUser();
+      })
+      .fail(function( jqXHR, textStatus, errorThrown) {
+        alert( 'Text Status: ', errorThrown );
+      });
+  });
+
+     // user handle preview
+
+     $('.modal').on('input', '#handle', function bar(e) {
+      $('.handle-preview').text('@' + e.target.value);
+    });
+
+
+  // user login
+  $('#login-modal').on('submit', '#login-form', function (event) {
+    event.preventDefault();
+    const data = $(this).serialize();
+    let valid = true;
+    $('#login-form input').each(function() {
+      if(!$(this).val()){
+          valid = false;
+          return;
+      }
+    });
+    if (!valid){
+      alert('Some fields are empty');
+      return;
+    }
+
+    $.ajax({
+      method: 'POST',
+      url: '/users/login',
+      data: data,
+    })
+      .done(function( data ) {
+        $('#login-modal').modal('hide');
+        getUser();
+      })
+      .fail(function( jqXHR, textStatus, errorThrown) {
+        alert( 'Invalid Login' );
+      });
+  });
+
+
+
+  // user logout
+  $('nav').on('click', '#logout', function bar() {
+    $.ajax({
+      method: 'POST',
+      url: '/users/logout',
+    })
+      .done(function(data){
+        getUser();
+      });
+  });
+
+
+
+
+
+    /////////////////////////////////////////////////////////////
+  //*********       Other UI Interactions       *********  ///
+  /////////////////////////////////////////////////////////// 
+  
   
   // Open compose form
 
   $('.compose').on('click', function(){
+    if (!user.handle){
+      return;
+    }
     $('.new-tweet').slideToggle();
     $('.new-tweet textarea').focus();
   });
@@ -163,102 +275,12 @@ function loadTweets(){
     }
     
      $.ajax({
-      method: "PUT",
-      url: "/tweets/" + tweetID,
+      method: 'PUT',
+      url: '/tweets/' + tweetID,
       data: {
         liked: liked,
-        liker: user.id
-      }
-    })
-  });
-
-
-
-
-  // user authentication
-  
-   // user handle preview
-  $('.modal').on('input', '#handle', function bar(e) {
-    $('.handle-preview').text("@" + e.target.value);
-  })
-
-
-  // register submit
-  $('#register-modal').on('submit', '#register-form', function (event) {
-    event.preventDefault();
-    const data = $(this).serialize();
-    let valid = true;
-    $('#register-form input').each(function() {
-      if(!$(this).val()){
-          valid = false;
-          return;
-      }
+        liker: user.id,
+      },
     });
-    if (!valid){
-      alert('Some fields are empty');
-      return;
-    }
-
-    $.ajax({
-      method: "POST",
-      url: "/users/register",
-      data: data
-    })
-      .done(function() {
-        $('#register-modal').modal('hide');
-        getUser();
-      })
-      .fail(function( jqXHR, textStatus, errorThrown) {
-        alert( "Text Status: ", errorThrown );
-      });
   });
-
-
-  // login
-  $('#login-modal').on('submit', '#login-form', function (event) {
-    event.preventDefault();
-    const data = $(this).serialize();
-    let valid = true;
-    $('#login-form input').each(function() {
-      if(!$(this).val()){
-          valid = false;
-          return;
-      }
-    });
-    if (!valid){
-      alert('Some fields are empty');
-      return;
-    }
-
-    $.ajax({
-      method: "POST",
-      url: "/users/login",
-      data: data
-    })
-      .done(function( data ) {
-        $('#login-modal').modal('hide');
-        getUser();
-      })
-      .fail(function( jqXHR, textStatus, errorThrown) {
-        alert( "Invalid Login" );
-      });
-  });
-
-
-
-  // logout
-  $('nav').on('click', '#logout', function bar() {
-    $.ajax({
-      method: "POST",
-      url: "/users/logout"
-    })
-      .done(function(data){
-        getUser();
-      });
-  })
-
-
-
-
-
 });

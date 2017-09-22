@@ -1,15 +1,16 @@
-"use strict";
-/* eslint-disable */
-// Basic express setup:
+// basic express setup:
 require('dotenv').config();
-const PORT          = 8080;
-const express       = require("express");
-const bodyParser    = require("body-parser");
-const app           = express();
-const { MongoClient } = require("mongodb");
-const MONGODB_URI = process.env.MONGODB_URI;
+
+const PORT = 8080;
+const express = require('express');
+const bodyParser = require('body-parser');
+
+const app = express();
+const { MongoClient } = require('mongodb');
+
+const { MONGODB_URI } = process.env;
 const cookieSession = require('cookie-session');
-const bcrypt = require('bcrypt');
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieSession({
@@ -26,11 +27,8 @@ app.use((req, res, next) => {
   next();
 });
 
- // static files, including home page
-app.use(express.static("public"));
-
-// The in-memory database of tweets. It's a basic object with an array in it.
-//const db = require("./lib/in-memory-db");
+// static files, including home page
+app.use(express.static('public'));
 
 MongoClient.connect(MONGODB_URI, (err, db) => {
   if (err) {
@@ -39,17 +37,15 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
   }
   console.log(`Connected to mongodb: ${MONGODB_URI}`);
 
-  const DataHelpers = require("./lib/data-helpers.js")(db);
-  const UserDataHelpers = require("./lib/user-data-helpers.js")(db);
-  const tweetsRoutes = require("./routes/tweets")(DataHelpers);
-  const usersRoutes = require("./routes/users")(UserDataHelpers);
-  
+  const DataHelpers = require('./lib/data-helpers.js')(db);
+  const UserDataHelpers = require('./lib/user-data-helpers.js')(db);
+  const tweetsRoutes = require('./routes/tweets')(DataHelpers);
+  const usersRoutes = require('./routes/users')(UserDataHelpers);
 
-
-  app.use("/tweets", tweetsRoutes);
-  app.use("/users", usersRoutes);
+  app.use('/tweets', tweetsRoutes);
+  app.use('/users', usersRoutes);
   app.listen(PORT, () => {
-    console.log("Example app listening on port " + PORT);
+    console.log(`Example app listening on port ${PORT}`);
   });
 });
 

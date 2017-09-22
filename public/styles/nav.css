@@ -9,6 +9,8 @@
   top: 0;
   text-align: center;
   z-index: 1;
+  display: flex;
+  justify-content: space-between;
 }
 
 #nav-bar .logo {
@@ -17,12 +19,14 @@
   float: left;
 }
 
-#nav-bar .nav-section {
-  display: inline;
+.logged-in-info {
+  display: flex;
+  align-items: center;
 }
 
-.auth * {
-  display: inline;
+
+.logged-in-info p {
+  margin: 10px;
 }
 
 #nav-bar div.logged-in-avatar {
@@ -56,4 +60,9 @@
   background-color: white;
   border-color: transparent;
   color: #00a887;
+}
+
+.auth {
+  align-items: center;
+  display: flex;
 }
