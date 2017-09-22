@@ -97,7 +97,7 @@ $(function foo() {
       method: 'POST',
       url: '/tweets',
       data: { text: tweetText,
-              user: user,
+              user: currentUser,
       },
     })
       .done(function( msg ) {
