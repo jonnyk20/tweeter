@@ -4,6 +4,7 @@ require('dotenv').config();
 const PORT = process.env.PORT || 5000;
 const express = require('express');
 const bodyParser = require('body-parser');
+const path = require('path');
 
 const app = express();
 const { MongoClient } = require('mongodb');
@@ -17,6 +18,16 @@ app.use(cookieSession({
   name: 'session',
   keys: ['key1', 'key2'],
 }));
+
+const sassMiddleware = require('node-sass-middleware');
+  console.log(path.resolve(__dirname, '../public/css'));
+app.use(sassMiddleware({
+  /* Options */
+  src: path.resolve(__dirname, '../sass'),
+  dest: path.resolve(__dirname, '../public'),
+  outputStyle: 'compressed',
+}));
+
 
 // local variables
 app.use((req, res, next) => {
