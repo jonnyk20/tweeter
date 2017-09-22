@@ -3,7 +3,7 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
-
+/* eslint-disable */
 $(function foo() {
   const currentUser = {};
   const noUserIcon = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Question_mark_white-transparent.svg/2000px-Question_mark_white-transparent.svg.png';
@@ -79,7 +79,7 @@ $(function foo() {
 
   $('.new-tweet form').on('submit', function (event) {
     event.preventDefault();
-    if (!user.handle){
+    if (!currentUser.handle){
       return;
     }
 
@@ -88,7 +88,7 @@ $(function foo() {
       $('.tweet-error').show().text('Your tweet is too long');
       return;
     } else if ($('.new-tweet textarea').val().length < 1){
-      $('.tweet-error').show().text('Your tweet is too short');
+      $('.tweet-error').show().text('You have not written anything');
       return;
     }
     
@@ -126,9 +126,11 @@ $(function foo() {
         $('#user').text('@'+ currentUser.handle);
         $('.logged-in-avatar img').attr('src', (currentUser.avatars.small || noUserIcon ));
         if (currentUser.handle){
+          $('.compose button').show();
           $('.logged-in-info').show();
           $('.logged-out-info').hide();
         } else {
+          $('.compose button, .new-tweet').hide();
           $('.logged-in-info').hide();
           $('.logged-out-info').show();
         }
@@ -240,19 +242,19 @@ getUser();
     const $tweet = $target.closest('.tweet');
     const likes = $tweet.data('likes');
     const tweetID = $tweet.data('tweetID');
-    let liked;
+    let alreadyLiked;
     if (currentUser.handle === $tweet.data('user') || !currentUser.handle)
       {
         return;
       }
     if ($tweet.data('liked') === false) {
-      liked = false;
+      alreadyLiked = false;
       $tweet.data('liked', true);
       $tweet.data('likes', likes + 1);
       $tweet.find('.likeCount').text( likes + 1 );
       $tweet.find('.likes').addClass('liked-tweet');
     } else {
-      liked = true;
+      alreadyLiked = true;
       $tweet.data('liked', false);
       $tweet.data('likes', likes - 1);
       $tweet.find('.likeCount').text( likes - 1 );
@@ -263,7 +265,7 @@ getUser();
       method: 'PUT',
       url: '/tweets/' + tweetID,
       data: {
-        liked,
+        alreadyLiked,
         liker: currentUser.id,
       },
     });

@@ -42,7 +42,7 @@ module.exports = function (DataHelpers) {
   });
 
   tweetsRoutes.put('/:id', (req, res) => {
-    const liked = JSON.parse(req.body.liked);
+    const alreadyLiked = JSON.parse(req.body.alreadyLiked);
     const liker =  req.body.liker;
     const { id } = req.params;
     DataHelpers.updateTweet((err) => {
@@ -51,7 +51,7 @@ module.exports = function (DataHelpers) {
       } else {
         res.status(200).send();
       }
-    }, id, liked, liker);
+    }, id, alreadyLiked, liker);
     res.end("put successful");
   });
   return tweetsRoutes;

@@ -23,7 +23,7 @@ module.exports = function (userDataHelpers) {
       if (err) {
         res.status(500).json({ error: err.message });
       } else {
-        // save user info to cookes
+        // save user info to cookies
         req.session.uid = newUserReturn._id;
         req.session.handle = newUserReturn.handle;
         req.session.name = newUserReturn.name;

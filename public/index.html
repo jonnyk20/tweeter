@@ -3,11 +3,12 @@
   <head>
     <!-- Meta Information -->
     <title>Tweeter - Home Page</title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- External CSS -->
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,700,700i" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css" integrity="sha384-y3tfxAZXuh4HwSYylfB+J125MxIs6mR5FOHamPBG064zB+AFeWH94NdvaCBm8qnd" crossorigin="anonymous">
+    
     <!-- App CSS -->
     <!-- <link rel="stylesheet" href="/css/main.css" type="text/css" /> -->
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
@@ -26,7 +27,7 @@
 
   <body>
 
-    <!-- Top nav bar (fixed) -->
+    <!-- Navigaition -->
     <nav id="nav-bar">
       <div class="nav-section hero">
         <i class="fa fa-comments-o logo fa-4x" aria-hidden="true"></i>
@@ -35,7 +36,7 @@
       <div class="nav-section compose">
         <button>
           <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-          Compose
+          <span class="hide-on-mobile">Compose</span>
         </button>
       </div>
       <div class="nav-section auth">
@@ -44,12 +45,12 @@
           <div class="logged-in-avatar">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Question_mark_white-transparent.svg/2000px-Question_mark_white-transparent.svg.png">
           </div>
-          <p>Logged in as: <span id="user"> &lt; User &gt; </span></p>
+          <p class="header-handle"><span class="hide-on-mobile">Logged in as:</span> <span id="user"> &lt; User &gt; </span></p>
           <button class="btn btn-default" id="logout"> Logout </button>
         </div>
 
         <div class="logged-out-info">
-          <span> Your are not Logged in. Please log in or register</span>
+          <span>Please log in or register</span>
           <div class="auth-button-group">
             <a data-toggle="modal" data-target="#register-modal"> <button class="btn btn-primary"> Register </button></a>
             <a data-toggle="modal" data-target="#login-modal"> <button class="btn btn-primary"> Login </button></a>
@@ -59,7 +60,8 @@
 
       </div>
     </nav>
-    <!-- Page-specific (main) content here -->
+
+    <!-- Main Content -->
     <main class="container">
       
         <section class="new-tweet">
@@ -77,7 +79,7 @@
     </main>
 
 
-<!-- Modal -->
+<!-- Register Modal -->
 <div class="modal fade" id="register-modal" tabindex="-1" role="dialog" aria-labelledby="register-modal-label" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -119,7 +121,6 @@
   
 
   <!-- Login Modal -->
-  <!-- Modal -->
   <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="login-modal-label" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -150,16 +151,6 @@
       </div>
     </div>
   </div>
-
-
-
-
-
-
-
-
-
-
 
   </body>
 </html>
