@@ -11,12 +11,16 @@
   z-index: 1;
   display: flex;
   justify-content: space-between;
+  overflow: unset;
+}
+
+.hero {
+  display: flex;
 }
 
 #nav-bar .logo {
   height: 80px;
   width: 80px;
-  float: left;
 }
 
 .logged-in-info {
@@ -43,6 +47,9 @@
   width: 50px;
 }
 
+.logged-out-info {
+  padding-top: 7px;
+}
 #nav-bar .header {
   float: left;
   font-size: 2em;
@@ -62,7 +69,8 @@
   color: #00a887;
 }
 
-.auth {
+.nav-section.auth {
   align-items: center;
-  display: flex;
+
+  display: none;
 }

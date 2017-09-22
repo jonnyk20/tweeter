@@ -5,38 +5,15 @@
  */
 
 $(function foo() {
-  const user = {};
+  const currentUser = {};
   const noUserIcon = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Question_mark_white-transparent.svg/2000px-Question_mark_white-transparent.svg.png';
 
 
-  /* *************            ************************************     */
-  /*               Getting Tweets           *********       */
- //////////////////////////////////////////////////////////// 
+  // ////////////////////////////////////////////////////////////
+  //                    Getting Tweets
+  // //////////////////////////////////////////////////////////
 
-  function loadTweets(){
-    $.ajax({
-      method: 'GET',
-      url: '/tweets',
-      dataType: 'json',
-      success: function(data){
-        data = data.sort((a, b) => b.created_at - a.created_at);
-        $('.tweets').empty();
-        renderTweets(data);
-      },
-    });
-  }
-
-  function renderTweets(tweets) {
-    // loops through tweets
-    tweets.forEach((tweet)=>{
-    // calls createTweetElement for each tweet
-    const $tweet = createTweetElement(tweet, user);
-    // takes return value and appends it to the tweets container
-    $('.tweets').append($tweet);
-    });
-  }
-
-  function createTweetElement({user, content, created_at, _id, likes, likedBy}, loggedInUser) {
+  function createTweetElement({user, content, created_at, _id, likes, likedBy}) {
     const $tweet = $('<article>').addClass('tweet').data( 'likes', likes );;
     // ...
     $tweet.html(`
@@ -48,8 +25,6 @@ $(function foo() {
 
         <div class='tweet-body'>
         ${content.text}
-        <hr>
-        <div class='id'>ID:  ${_id} </div>
         </div>
 
         <div class='tweet-footer'>
@@ -64,8 +39,9 @@ $(function foo() {
           </div>
         </div>
         `);
+
         $tweet.data('likes', likes).data('user', user.handle).data('tweetID', _id).data('liked', false);
-        if (likedBy.includes(loggedInUser.id)){
+        if (likedBy.includes(currentUser.id)){
           $tweet.data('liked', true);
           $tweet.find('.likes').addClass('liked-tweet');
         }
@@ -74,6 +50,28 @@ $(function foo() {
   }
 
 
+  function renderTweets(tweets) {
+    // loops through tweets
+    tweets.forEach((tweet) => {
+      // calls createTweetElement for each tweet
+      const $tweet = createTweetElement(tweet);
+      // takes return value and appends it to the tweets container
+      $('.tweets').append($tweet);
+    });
+  }
+
+  function loadTweets() {
+    $.ajax({
+      method: 'GET',
+      url: '/tweets',
+      dataType: 'json',
+      success: function (tweetsData) {
+        const tweetsToRender = tweetsData.sort((a, b) => b.created_at - a.created_at);
+        $('.tweets').empty();
+        renderTweets(tweetsToRender);
+      },
+    });
+  }
 
    ////////////////////////////////////////////////////////////
   //*********       Creating New Tweet          *********  ///
@@ -110,11 +108,6 @@ $(function foo() {
   });
 
 
-
-
-
-
-
    ////////////////////////////////////////////////////////////
   //*********       User Athentication        *********    ///
  //////////////////////////////////////////////////////////// 
@@ -125,29 +118,26 @@ $(function foo() {
     $.ajax({
       method: 'GET',
       url: '/users',
-      success: function(data){
-        user.name = data.name;
-        user.handle = data.handle;
-        user.id = data.uid;
-        user.avatars = { small: data.avatar };
-        $('#user').text('@'+ user.handle);
-        $('.logged-in-avatar img').attr('src', (user.avatars.small || noUserIcon ));
-        if (user.handle){
+      success: function(userData){
+        currentUser.name = userData.name;
+        currentUser.handle = userData.handle;
+        currentUser.id = userData.uid;
+        currentUser.avatars = { small: userData.avatar };
+        $('#user').text('@'+ currentUser.handle);
+        $('.logged-in-avatar img').attr('src', (currentUser.avatars.small || noUserIcon ));
+        if (currentUser.handle){
           $('.logged-in-info').show();
           $('.logged-out-info').hide();
         } else {
           $('.logged-in-info').hide();
           $('.logged-out-info').show();
         }
+        $('.auth').show();
         loadTweets(); 
       },
     });
   }
-  getUser();
-
-
-
-
+getUser();
 
   // ruser registration
 
@@ -218,7 +208,6 @@ $(function foo() {
   });
 
 
-
   // user logout
   $('nav').on('click', '#logout', function bar() {
     $.ajax({
@@ -230,19 +219,15 @@ $(function foo() {
       });
   });
 
-
-
-
-
     /////////////////////////////////////////////////////////////
   //*********       Other UI Interactions       *********  ///
   /////////////////////////////////////////////////////////// 
   
   
-  // Open compose form
+  // open or clsoe compose form
 
   $('.compose').on('click', function(){
-    if (!user.handle){
+    if (!currentUser.handle){
       return;
     }
     $('.new-tweet').slideToggle();
@@ -256,7 +241,7 @@ $(function foo() {
     const likes = $tweet.data('likes');
     const tweetID = $tweet.data('tweetID');
     let liked;
-    if (user.handle === $tweet.data('user') || !user.handle)
+    if (currentUser.handle === $tweet.data('user') || !currentUser.handle)
       {
         return;
       }
@@ -278,8 +263,8 @@ $(function foo() {
       method: 'PUT',
       url: '/tweets/' + tweetID,
       data: {
-        liked: liked,
-        liker: user.id,
+        liked,
+        liker: currentUser.id,
       },
     });
   });
