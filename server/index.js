@@ -26,6 +26,7 @@ app.use(sassMiddleware({
   src: path.resolve(__dirname, '../sass'),
   dest: path.resolve(__dirname, '../public'),
   outputStyle: 'compressed',
+  force: true,
 }));
 
 
