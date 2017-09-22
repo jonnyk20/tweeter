@@ -33,7 +33,7 @@ nav .logo {
   margin: 10px;
 }
 
-#nav-bar div.logged-in-avatar {
+.logged-in-avatar {
   padding: 5px;
   margin: 10px;
   background-color: transparent;
@@ -50,7 +50,7 @@ nav .logo {
 .logged-out-info {
   padding-top: 7px;
 }
-#nav-bar .header {
+ .header {
   float: left;
   font-size: 2em;
   margin-top: 0.5em; /* Line Height */

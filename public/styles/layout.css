@@ -164,25 +164,45 @@ div.tweet-footer .likes .fa{
 @media  screen and (max-device-width: 480px) {
   nav#nav-bar {
     padding: 0 5px 0 5px;
+    height: 100px;
   }
   .hero {
     flex-direction: column;
+    justify-content: space-around;
+    margin-left: 20px;
   }
 
   nav#nav-bar .fa.logo {
-    height: 40px;
-    width: 40px;
+    height: 20px;
+    width: 20px;
   }
 
-  span.hide-on-mobile {
+ span.hide-on-mobile, nav div.hide-on-mobile {
     display: none;
   }
+ span.site-title {
+   font-size: 100%;
+   padding-top: 20px;
+   padding-left: 5px;
+ }
+ div.logged-in-info {
+  flex-direction: column;
+  padding-top: 15px;
+  padding-right: 10px;
+ }
   .logged-in-info p.header-handle {
+    font-size: large;
     margin: 0;
   }
+
+  button.compose-button {
+    margin-top: 10px;
+  }
+
   #logout {
     padding: 5px;
     color: #00a887;
+    margin: 5px;
   }
   /* body {
       background-color: #C4F5CE;
