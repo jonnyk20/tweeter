@@ -20,7 +20,7 @@ app.use(cookieSession({
 }));
 
 const sassMiddleware = require('node-sass-middleware');
-  console.log(path.resolve(__dirname, '../public/css'));
+
 app.use(sassMiddleware({
   /* Options */
   src: path.resolve(__dirname, '../scss'),

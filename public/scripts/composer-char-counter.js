@@ -1,4 +1,3 @@
-/* eslint-disable */
 $(function foo() {
   const charMax = 140;
   $('.new-tweet').on('input', 'textarea', function bar() {

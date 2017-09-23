@@ -3,7 +3,7 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
-/* eslint-disable */
+
 $(function foo() {
   const currentUser = {};
   const noUserIcon = 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Question_mark_white-transparent.svg/2000px-Question_mark_white-transparent.svg.png';
@@ -13,8 +13,17 @@ $(function foo() {
   //                    Getting Tweets
   // //////////////////////////////////////////////////////////
 
+  function howLongAgo(whenTheyTweeted){
+    const oneDay = 24*60*60*1000; // hours*minutes*seconds*milliseconds
+    const tweetDate = new Date(whenTheyTweeted);
+    const todaysDate = new Date(Date.now());
+    const diffDays = Math.round(Math.abs((tweetDate.getTime() - todaysDate.getTime())/(oneDay)));
+    return diffDays === 0 ? 'Today' : `${diffDays} day${diffDays === 1? '': 's'} ago`;
+  }
+  
+
   function createTweetElement({user, content, created_at, _id, likes, likedBy}) {
-    const $tweet = $('<article>').addClass('tweet').data( 'likes', likes );;
+    const $tweet = $('<article>').addClass('tweet').data( 'likes', likes );
     // ...
     $tweet.html(`
         <div class='tweet-header'>
@@ -28,7 +37,7 @@ $(function foo() {
         </div>
 
         <div class='tweet-footer'>
-          <span class='tweet-time'> ${created_at}</span>
+          <span class='tweet-time'> ${howLongAgo(created_at)}</span>
           <div class='tweet-actions'>
             <i class='fa fa-flag fa-lg' aria-hidden='true'></i>
             <i class='fa fa-retweet fa-lg' aria-hidden='true'></i>
