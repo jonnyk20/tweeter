@@ -7,15 +7,50 @@
   padding: 0 2em 0 2em;
   position: fixed;
   top: 0;
+  text-align: center;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  overflow: unset;
 }
 
-#nav-bar .logo {
+.hero {
+  display: flex;
+}
+
+nav .logo {
   height: 80px;
   width: 80px;
-  float: left;
 }
 
-#nav-bar .header {
+.logged-in-info {
+  display: flex;
+  align-items: center;
+}
+
+
+.logged-in-info p {
+  margin: 10px;
+}
+
+.logged-in-avatar {
+  padding: 5px;
+  margin: 10px;
+  background-color: transparent;
+  display: inline-block;
+  border-radius: 5px;
+  border: solid 2px white;
+}
+
+#nav-bar div.logged-in-avatar img{
+  height: 50px;
+  width: 50px;
+}
+
+.logged-out-info {
+  padding-top: 7px;
+}
+ .header {
   float: left;
   font-size: 2em;
   margin-top: 0.5em; /* Line Height */
@@ -32,4 +67,10 @@
   background-color: white;
   border-color: transparent;
   color: #00a887;
+}
+
+.nav-section.auth {
+  align-items: center;
+
+  display: none;
 }

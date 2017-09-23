@@ -23,9 +23,10 @@ const sassMiddleware = require('node-sass-middleware');
   console.log(path.resolve(__dirname, '../public/css'));
 app.use(sassMiddleware({
   /* Options */
-  src: path.resolve(__dirname, '../sass'),
+  src: path.resolve(__dirname, '../scss'),
   dest: path.resolve(__dirname, '../public'),
   outputStyle: 'compressed',
+  debug: true,
   force: true,
 }));
 
