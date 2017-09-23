@@ -8,7 +8,7 @@ This repository is the starter code for the project: Students will fork and clon
 
 !["Screenshot of tweets feed"](https://github.com/jonnyk20/tweeter/blob/master/docs/tweets-feed.png)
 !["screenshot of new tweet"](https://github.com/jonnyk20/tweeter/blob/master/docs/new-tweet.png)
-!["screenshot of register form"] (https://github.com/jonnyk20/tweeter/blob/master/docs/register-form.png)
+!["screenshot of register form"](https://github.com/jonnyk20/tweeter/blob/master/docs/register-form.png)
 
 
 ## Getting Started
