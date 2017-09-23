@@ -28,4 +28,3 @@ This repository is the starter code for the project: Students will fork and clon
 - dotenv
 - mongodb
 - node-sass-middleware
-- moment
