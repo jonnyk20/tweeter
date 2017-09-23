@@ -6,9 +6,9 @@ This repository is the starter code for the project: Students will fork and clon
 
 ## Final Product
 
-!["Screenshot or URLs page"](https://github.com/jonnyk20/tiny-app/blob/master/docs/urls-page.png)
-!["screenshot of edit page"](https://github.com/jonnyk20/tiny-app/blob/master/docs/edit-page.png)
-!["screenshot of register page"] (https://github.com/jonnyk20/tiny-app/blob/master/docs/register-page.png)
+!["Screenshot of tweets feed"](https://github.com/jonnyk20/tweeter/blob/master/docs/tweets-feed.png)
+!["screenshot of new tweet"](https://github.com/jonnyk20/tweeter/blob/master/docs/new-tweet.png)
+!["screenshot of register form"] (https://github.com/jonnyk20/tweeter/blob/master/docs/register-form.png)
 
 
 ## Getting Started
